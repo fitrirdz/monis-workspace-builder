@@ -94,8 +94,75 @@ export default function Page() {
         </div>
 
         {/* CENTER */}
-        <div className='relative h-100 bg-white rounded-xl border flex items-center justify-center'>
-          <p className='text-neutral-400'>Workspace Preview</p>
+        <div className='relative h-[400px] bg-white rounded-xl border overflow-hidden'>
+          {/* background */}
+          <div className='absolute inset-0 bg-gradient-to-b from-neutral-50 to-neutral-200' />
+
+          {/* DESK */}
+          {selectedDesk && (
+            <Image
+              src={desks.find((d) => d.id === selectedDesk)!.image}
+              alt='desk'
+              width={300}
+              height={200}
+              className='absolute bottom-0 left-1/2 -translate-x-1/2 z-10'
+            />
+          )}
+
+          {/* CHAIR */}
+          {selectedChair && (
+            <Image
+              src={chairs.find((c) => c.id === selectedChair)!.image}
+              alt='chair'
+              width={150}
+              height={150}
+              className='absolute bottom-0 left-[30%] z-20'
+            />
+          )}
+
+          {/* MONITOR */}
+          {selectedAccessories.includes('monitor') && (
+            <Image
+              src='/accessories/monitor.png'
+              alt='monitor'
+              width={120}
+              height={100}
+              className='absolute bottom-[120px] left-1/2 -translate-x-1/2 z-30'
+            />
+          )}
+
+          {/* LAMP */}
+          {selectedAccessories.includes('lamp') && (
+            <Image
+              src='/accessories/lamp.png'
+              alt='lamp'
+              width={80}
+              height={100}
+              className='absolute bottom-[120px] left-[65%] z-30'
+            />
+          )}
+
+          {/* PLANT */}
+          {selectedAccessories.includes('plant') && (
+            <Image
+              src='/accessories/plant.png'
+              alt='plant'
+              width={80}
+              height={100}
+              className='absolute bottom-[110px] left-[20%] z-30'
+            />
+          )}
+
+          {/* empty state */}
+          {!selectedDesk &&
+            !selectedChair &&
+            selectedAccessories.length === 0 && (
+              <div className='absolute inset-0 flex items-center justify-center'>
+                <p className='text-neutral-400'>
+                  Start building your workspace ✨
+                </p>
+              </div>
+            )}
         </div>
 
         {/* RIGHT */}

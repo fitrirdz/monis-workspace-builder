@@ -39,7 +39,7 @@ export const accessories: WorkspaceItem[] = [
   {
     id: 'monitor',
     name: 'Monitor',
-    image: '/accessories/monitor.webp',
+    image: '/accessories/monitor.png',
     price: 10,
   },
   {
