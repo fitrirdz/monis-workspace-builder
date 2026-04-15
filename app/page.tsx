@@ -1,65 +1,116 @@
-import Image from "next/image";
+'use client';
 
-export default function Home() {
+import { useState } from 'react';
+import Tabs from '@/components/Tabs';
+import Image from 'next/image';
+import {
+  chairs,
+  desks,
+  accessories,
+  type WorkspaceItem,
+} from '@/data/products';
+
+type TabType = 'chairs' | 'desks' | 'accessories';
+
+export default function Page() {
+  const [activeTab, setActiveTab] = useState<TabType>('chairs');
+
+  const [selectedChair, setSelectedChair] = useState<string | null>(null);
+  const [selectedDesk, setSelectedDesk] = useState<string | null>(null);
+  const [selectedAccessories, setSelectedAccessories] = useState<string[]>([]);
+
+  const getItems = (): WorkspaceItem[] => {
+    if (activeTab === 'chairs') return chairs;
+    if (activeTab === 'desks') return desks;
+    return accessories;
+  };
+
+  const handleSelect = (item: WorkspaceItem) => {
+    if (activeTab === 'chairs') {
+      setSelectedChair(item.id);
+    } else if (activeTab === 'desks') {
+      setSelectedDesk(item.id);
+    } else {
+      setSelectedAccessories((prev) =>
+        prev.includes(item.id)
+          ? prev.filter((i) => i !== item.id)
+          : [...prev, item.id],
+      );
+    }
+  };
+
+  const isSelected = (item: WorkspaceItem) => {
+    if (activeTab === 'chairs') return selectedChair === item.id;
+    if (activeTab === 'desks') return selectedDesk === item.id;
+    return selectedAccessories.includes(item.id);
+  };
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className='min-h-screen bg-neutral-100 p-6'>
+      {/* Header */}
+      <div className='text-center mb-8'>
+        <h1 className='text-4xl font-bold'>Design Your Workspace!</h1>
+        <p className='text-neutral-600 mt-2'>— Create Your Perfect Setup! —</p>
+      </div>
+
+      <div className='grid grid-cols-3 gap-6 items-start'>
+        {/* LEFT */}
+        <div className='border rounded-xl p-4 bg-white'>
+          <Tabs activeTab={activeTab} onChange={setActiveTab} />
+
+          <div className='mt-4 grid grid-cols-2 gap-3'>
+            {getItems().map((item) => {
+              const active = isSelected(item);
+
+              return (
+                <button
+                  key={item.id}
+                  onClick={() => handleSelect(item)}
+                  className={`border rounded-lg p-3 text-left transition ${
+                    active
+                      ? 'border-black bg-neutral-100'
+                      : 'hover:bg-neutral-50'
+                  }`}
+                >
+                  <div className='flex items-center gap-3'>
+                    <Image
+                      src={item.image}
+                      alt={item.name}
+                      width={60}
+                      height={60}
+                      className='object-contain'
+                    />
+                    <div>
+                      <p className='text-sm font-medium'>{item.name}</p>
+                      <p className='text-xs text-neutral-500'>
+                        ${item.price}/mo
+                      </p>
+                    </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        {/* CENTER */}
+        <div className='relative h-100 bg-white rounded-xl border flex items-center justify-center'>
+          <p className='text-neutral-400'>Workspace Preview</p>
         </div>
-      </main>
-    </div>
+
+        {/* RIGHT */}
+        <div className='space-y-4'>
+          <button className='w-full border-2 border-dashed rounded-xl p-4 hover:bg-neutral-50'>
+            + Add Monitor
+          </button>
+          <button className='w-full border-2 border-dashed rounded-xl p-4 hover:bg-neutral-50'>
+            + Add Lamp
+          </button>
+          <button className='w-full border-2 border-dashed rounded-xl p-4 hover:bg-neutral-50'>
+            + Place a Plant
+          </button>
+        </div>
+      </div>
+    </main>
   );
 }
