@@ -23,7 +23,7 @@ export const chairs: WorkspaceItem[] = [
 export const desks: WorkspaceItem[] = [
   {
     id: 'desk-1',
-    name: 'Wood Deskkkk',
+    name: 'Wood Desk',
     image: '/desks/desk1.png',
     price: 20,
   },

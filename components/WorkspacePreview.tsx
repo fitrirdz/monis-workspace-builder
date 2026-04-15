@@ -23,8 +23,8 @@ export default function WorkspacePreview({
         <Image
           src={desks.find((d) => d.id === selectedDesk)!.image}
           alt='desk'
-          width={300}
-          height={200}
+          width={350}
+          height={250}
           className='absolute bottom-0 left-1/2 -translate-x-1/2 z-10'
         />
       )}
@@ -34,9 +34,9 @@ export default function WorkspacePreview({
         <Image
           src={chairs.find((c) => c.id === selectedChair)!.image}
           alt='chair'
-          width={150}
-          height={150}
-          className='absolute bottom-0 left-[30%] z-20'
+          width={400}
+          height={400}
+          className='absolute bottom-0 left-[5%] z-30'
         />
       )}
 
@@ -47,7 +47,7 @@ export default function WorkspacePreview({
           alt='monitor'
           width={120}
           height={100}
-          className='absolute bottom-30 left-1/2 -translate-x-1/2 z-30'
+          className='absolute bottom-42 left-1/2 -translate-x-1/2 z-20'
         />
       )}
 
@@ -55,9 +55,9 @@ export default function WorkspacePreview({
         <Image
           src='/accessories/lamp.png'
           alt='lamp'
-          width={80}
-          height={100}
-          className='absolute bottom-30 left-[65%] z-30'
+          width={70}
+          height={80}
+          className='absolute bottom-43 left-[63%] z-20'
         />
       )}
 
@@ -65,9 +65,9 @@ export default function WorkspacePreview({
         <Image
           src='/accessories/plant.png'
           alt='plant'
-          width={80}
-          height={100}
-          className='absolute bottom-27.5 left-[20%] z-30'
+          width={50}
+          height={50}
+          className='absolute bottom-43 left-[25%] z-20'
         />
       )}
 

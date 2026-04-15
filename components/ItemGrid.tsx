@@ -33,7 +33,7 @@ export default function ItemGrid({ items, onSelect, isSelected }: Props) {
               />
               <div>
                 <p className='text-sm font-medium'>{item.name}</p>
-                <p className='text-xs text-neutral-500'>${item.price}/mo</p>
+                <p className='text-xs text-neutral-500'>${item.price}/day</p>
               </div>
             </div>
           </button>

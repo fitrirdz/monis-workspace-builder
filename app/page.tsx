@@ -29,9 +29,13 @@ export default function Page() {
   };
 
   const handleSelect = (item: WorkspaceItem) => {
-    if (activeTab === 'chairs') setSelectedChair(item.id);
-    else if (activeTab === 'desks') setSelectedDesk(item.id);
-    else {
+    if (activeTab === 'chairs') {
+      if (selectedChair === item.id) setSelectedChair(null);
+      else setSelectedChair(item.id);
+    } else if (activeTab === 'desks') {
+      if (selectedDesk === item.id) setSelectedDesk(null);
+      else setSelectedDesk(item.id);
+    } else {
       setSelectedAccessories((prev) =>
         prev.includes(item.id)
           ? prev.filter((i) => i !== item.id)
